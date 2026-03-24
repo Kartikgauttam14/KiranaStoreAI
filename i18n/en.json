@@ -1,0 +1,75 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Retry",
+    "search": "Search",
+    "add": "Add",
+    "rupee": "₹",
+    "ok": "OK",
+    "close": "Close"
+  },
+  "auth": {
+    "roleTitle": "Who are you?",
+    "storeOwner": "Store Owner",
+    "customer": "Customer",
+    "enterPhone": "Enter your mobile number",
+    "sendOtp": "Send OTP",
+    "verifyOtp": "Verify OTP",
+    "resendOtp": "Resend OTP",
+    "otpSent": "OTP sent to your number",
+    "invalidOtp": "Invalid OTP",
+    "invalidPhone": "Invalid phone number"
+  },
+  "inventory": {
+    "title": "Inventory",
+    "addProduct": "Add Product",
+    "editProduct": "Edit Product",
+    "lowStock": "Low Stock",
+    "outOfStock": "Out of Stock",
+    "reorderAlert": "Reorder Needed",
+    "sku": "SKU",
+    "price": "Price",
+    "stock": "Stock",
+    "category": "Category"
+  },
+  "forecast": {
+    "title": "AI Demand Forecast",
+    "analyzeAll": "Analyze All Products",
+    "restockNow": "Order Now",
+    "orderWhatsapp": "Order via WhatsApp",
+    "confidence": {
+      "High": "High Confidence",
+      "Medium": "Medium Confidence",
+      "Low": "Low Confidence"
+    },
+    "recommended": "Recommended Quantity",
+    "days7": "7 Days",
+    "days14": "14 Days",
+    "days30": "30 Days"
+  },
+  "billing": {
+    "newBill": "New Bill",
+    "generateBill": "Generate Bill",
+    "paymentMode": "Payment Mode",
+    "cash": "Cash",
+    "upi": "UPI",
+    "credit": "Credit (Khata)",
+    "card": "Card",
+    "grandTotal": "Grand Total",
+    "quantity": "Quantity",
+    "unit": "Unit",
+    "price": "Price"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "todayRevenue": "Today's Revenue",
+    "orders": "Orders",
+    "lowStockItems": "Low Stock Items",
+    "bills": "Bills"
+  }
+}

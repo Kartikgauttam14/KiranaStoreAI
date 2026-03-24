@@ -1,0 +1,75 @@
+{
+  "common": {
+    "save": "सहेजें",
+    "cancel": "रद्द करें",
+    "delete": "हटाएं",
+    "edit": "संपादित करें",
+    "loading": "लोड हो रहा है...",
+    "error": "कुछ गड़बड़ हुई",
+    "retry": "पुनः प्रयास करें",
+    "search": "खोजें",
+    "add": "जोड़ें",
+    "rupee": "₹",
+    "ok": "ठीक है",
+    "close": "बंद करें"
+  },
+  "auth": {
+    "roleTitle": "आप कौन हैं?",
+    "storeOwner": "दुकान मालिक",
+    "customer": "ग्राहक",
+    "enterPhone": "अपना मोबाइल नंबर डालें",
+    "sendOtp": "OTP भेजें",
+    "verifyOtp": "OTP सत्यापित करें",
+    "resendOtp": "OTP दोबारा भेजें",
+    "otpSent": "आपके नंबर पर OTP भेज दिया गया है",
+    "invalidOtp": "गलत OTP",
+    "invalidPhone": "गलत फोन नंबर"
+  },
+  "inventory": {
+    "title": "माल सूची",
+    "addProduct": "उत्पाद जोड़ें",
+    "editProduct": "उत्पाद संपादित करें",
+    "lowStock": "कम स्टॉक",
+    "outOfStock": "स्टॉक खत्म",
+    "reorderAlert": "पुनः ऑर्डर की जरूरत है",
+    "sku": "SKU",
+    "price": "कीमत",
+    "stock": "स्टॉक",
+    "category": "श्रेणी"
+  },
+  "forecast": {
+    "title": "AI मांग पूर्वानुमान",
+    "analyzeAll": "सभी उत्पाद विश्लेषण करें",
+    "restockNow": "अभी ऑर्डर करें",
+    "orderWhatsapp": "WhatsApp से ऑर्डर करें",
+    "confidence": {
+      "High": "उच्च विश्वास",
+      "Medium": "मध्यम विश्वास",
+      "Low": "कम विश्वास"
+    },
+    "recommended": "सुझाव दिया गया मात्रा",
+    "days7": "7 दिन",
+    "days14": "14 दिन",
+    "days30": "30 दिन"
+  },
+  "billing": {
+    "newBill": "नया बिल",
+    "generateBill": "बिल बनाएं",
+    "paymentMode": "भुगतान का तरीका",
+    "cash": "नकद",
+    "upi": "UPI",
+    "credit": "उधार",
+    "card": "कार्ड",
+    "grandTotal": "कुल राशि",
+    "quantity": "मात्रा",
+    "unit": "यूनिट",
+    "price": "कीमत"
+  },
+  "dashboard": {
+    "title": "डैशबोर्ड",
+    "todayRevenue": "आज की आय",
+    "orders": "ऑर्डर",
+    "lowStockItems": "कम स्टॉक आइटम",
+    "bills": "बिल"
+  }
+}
