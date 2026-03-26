@@ -22,10 +22,10 @@ jobs:
         cache: 'npm'
 
     - name: Install Root Dependencies
-      run: npm install
+      run: npm install --legacy-peer-deps
 
     - name: Install Backend Dependencies
-      run: cd backend && npm install
+      run: cd backend && npm install --legacy-peer-deps
 
     - name: Fix Line Endings (CRLF to LF)
       run: |
