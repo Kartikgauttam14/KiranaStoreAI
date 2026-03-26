@@ -39,3 +39,14 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# Ignore json build artifacts
+*.json
+!package.json
+!package-lock.json
+!app.json
+!tsconfig.json
+!eas.json
+
+# Don't ignore README
+!README.md
