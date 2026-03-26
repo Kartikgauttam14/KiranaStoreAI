@@ -1,0 +1,319 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Enums
+enum Role {
+  STORE_OWNER
+  CUSTOMER
+}
+
+enum OrderStatus {
+  PLACED
+  CONFIRMED
+  PACKED
+  OUT_FOR_DELIVERY
+  DELIVERED
+  CANCELLED
+}
+
+enum PaymentMode {
+  CASH
+  UPI
+  CARD
+  CREDIT
+}
+
+enum StockAdjustmentReason {
+  PURCHASE
+  DAMAGE
+  THEFT
+  EXPIRY
+  CORRECTION
+  RETURN
+}
+
+// Models
+model User {
+  id           String   @id @default(cuid())
+  phone        String   @unique
+  name         String
+  profileImage String?
+  role         Role
+  language     String   @default("hi")
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  stores    Store[]
+  orders    Order[]
+  addresses Address[]
+  notifications Notification[]
+
+  @@index([role])
+  @@index([createdAt])
+}
+
+model Store {
+  id             String   @id @default(cuid())
+  ownerId        String
+  name           String
+  bannerImage    String?
+  gstNumber      String?  @unique
+  fssaiNumber    String?
+  phone          String?
+  latitude       Float
+  longitude      Float
+  address        String
+  city           String
+  pincode        String
+  deliveryRadius Float    @default(3.0)
+  minOrderValue  Float    @default(100)
+  openTime       String   @default("08:00")
+  closeTime      String   @default("22:00")
+  isOpen         Boolean  @default(true)
+  isActive       Boolean  @default(true)
+  isApproved     Boolean  @default(true)
+  rating         Float    @default(0)
+  totalRatings   Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  owner    User       @relation(fields: [ownerId], references: [id])
+  products Product[]
+  bills    Bill[]
+  orders   Order[]
+  forecasts Forecast[]
+
+  @@index([ownerId])
+  @@index([city])
+  @@index([isActive])
+  @@index([latitude, longitude])
+}
+
+model Product {
+  id            String   @id @default(cuid())
+  storeId       String
+  name          String
+  nameHindi     String?
+  category      String
+  sku           String
+  barcode       String?
+  unit          String
+  costPrice     Float
+  sellingPrice  Float
+  currentStock  Float
+  reorderLevel  Float
+  reorderQty    Float
+  gstRate       Float    @default(5)
+  hsnCode       String?
+  imageUrl      String?
+  expiryDate    DateTime?
+  supplierName  String?
+  supplierPhone String?
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  store             Store              @relation(fields: [storeId], references: [id])
+  billItems         BillItem[]
+  orderItems        OrderItem[]
+  stockAdjustments  StockAdjustment[]
+  forecasts         Forecast[]
+  salesLogs         SaleLog[]
+
+  @@unique([storeId, sku])
+  @@index([storeId])
+  @@index([category])
+  @@index([barcode])
+  @@index([currentStock])
+  @@index([expiryDate])
+}
+
+model SaleLog {
+  id         String   @id @default(cuid())
+  productId  String
+  storeId    String
+  quantity   Float
+  unitPrice  Float
+  totalPrice Float
+  saleDate   DateTime @default(now())
+
+  product    Product  @relation(fields: [productId], references: [id])
+
+  @@index([productId, saleDate])
+  @@index([storeId, saleDate])
+}
+
+model StockAdjustment {
+  id        String                @id @default(cuid())
+  productId String
+  storeId   String
+  type      String
+  quantity  Float
+  reason    StockAdjustmentReason
+  notes     String?
+  createdAt DateTime              @default(now())
+
+  product   Product               @relation(fields: [productId], references: [id])
+
+  @@index([productId])
+  @@index([storeId])
+  @@index([createdAt])
+}
+
+model Bill {
+  id            String      @id @default(cuid())
+  storeId       String
+  billNumber    String
+  customerName  String?
+  customerPhone String?
+  subtotal      Float
+  gstTotal      Float
+  discount      Float       @default(0)
+  grandTotal    Float
+  paymentMode   PaymentMode
+  isPaid        Boolean     @default(true)
+  pdfUrl        String?
+  createdAt     DateTime    @default(now())
+
+  store         Store       @relation(fields: [storeId], references: [id])
+  items         BillItem[]
+
+  @@unique([storeId, billNumber])
+  @@index([storeId])
+  @@index([billNumber])
+  @@index([createdAt])
+  @@index([paymentMode])
+}
+
+model BillItem {
+  id         String  @id @default(cuid())
+  billId     String
+  productId  String
+  productName String
+  quantity   Float
+  unit       String
+  unitPrice  Float
+  gstRate    Float
+  gstAmount  Float
+  totalPrice Float
+
+  bill       Bill    @relation(fields: [billId], references: [id], onDelete: Cascade)
+  product    Product @relation(fields: [productId], references: [id])
+
+  @@index([billId])
+  @@index([productId])
+}
+
+model Forecast {
+  id              String   @id @default(cuid())
+  productId       String
+  storeId         String
+  forecast7d      Float
+  forecast14d     Float
+  forecast30d     Float
+  restockNow      Boolean
+  recommendedQty  Float
+  bestReorderDay  String
+  seasonalNote    String?
+  confidence      String
+  reasoning       String
+  generatedAt     DateTime @default(now())
+
+  product         Product  @relation(fields: [productId], references: [id])
+  store           Store    @relation(fields: [storeId], references: [id])
+
+  @@unique([storeId, productId])
+  @@index([storeId])
+  @@index([productId])
+  @@index([generatedAt])
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  customerId      String
+  storeId         String
+  orderNumber     String      @unique
+  status          OrderStatus @default(PLACED)
+  deliveryAddress String
+  subtotal        Float
+  deliveryFee     Float       @default(0)
+  discount        Float       @default(0)
+  grandTotal      Float
+  paymentMode     PaymentMode
+  isPaid          Boolean     @default(false)
+  notes           String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  customer        User        @relation(fields: [customerId], references: [id])
+  store           Store       @relation(fields: [storeId], references: [id])
+  items           OrderItem[]
+
+  @@index([customerId])
+  @@index([storeId])
+  @@index([orderNumber])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model OrderItem {
+  id          String  @id @default(cuid())
+  orderId     String
+  productId   String
+  productName String
+  quantity    Float
+  unit        String
+  unitPrice   Float
+  totalPrice  Float
+
+  order       Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product     Product @relation(fields: [productId], references: [id])
+
+  @@index([orderId])
+  @@index([productId])
+}
+
+model Address {
+  id        String   @id @default(cuid())
+  userId    String
+  label     String
+  line1     String
+  line2     String?
+  city      String
+  pincode   String
+  latitude  Float?
+  longitude Float?
+  isDefault Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([isDefault])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  type      String   // "LOW_STOCK", "ORDER_RECEIVED", "FORECAST_READY", "EXPIRY_WARNING"
+  title     String
+  message   String
+  imageUrl  String?
+  data      String?  // JSON string for additional context
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  readAt    DateTime?
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([isRead])
+  @@index([createdAt])
+}
