@@ -1,0 +1,47 @@
+export const Colors = {
+  primary: "#FF6B00",
+  primaryLight: "#FFF0E6",
+  secondary: "#1A73E8",
+  success: "#34A853",
+  warning: "#FBBC04",
+  danger: "#EA4335",
+  error: "#EA4335",
+  info: "#1A73E8",
+  dark: "#1C1C1E",
+  gray900: "#2C2C2E",
+  gray600: "#6C6C70",
+  gray400: "#A6A6A6",
+  gray300: "#C7C7CC",
+  gray100: "#F2F2F7",
+  white: "#FFFFFF",
+  background: "#F8F9FA",
+  cardBackground: "#FFFFFF",
+  border: "#E5E5EA",
+  textPrimary: "#1C1C1E",
+  textSecondary: "#6C6C70",
+  textPlaceholder: "#AEAEB2",
+  rupee: "#2E7D32",
+  lowStock: "#FF9500",
+  outOfStock: "#EA4335",
+  inStock: "#34A853",
+};
+
+export const Typography = {
+  h1: { fontSize: 32, fontWeight: '700', lineHeight: 40 },
+  h2: { fontSize: 28, fontWeight: '700', lineHeight: 36 },
+  h3: { fontSize: 24, fontWeight: '600', lineHeight: 32 },
+  h4: { fontSize: 20, fontWeight: '600', lineHeight: 28 },
+  body1: { fontSize: 16, fontWeight: '400', lineHeight: 24 },
+  body2: { fontSize: 14, fontWeight: '400', lineHeight: 20 },
+  caption: { fontSize: 12, fontWeight: '400', lineHeight: 16 },
+  button: { fontSize: 16, fontWeight: '600', lineHeight: 24 },
+};
+
+export const Spacing = {
+  xs: 4,
+  sm: 8,
+  md: 16,
+  lg: 24,
+  xl: 32,
+  xxl: 48,
+};
