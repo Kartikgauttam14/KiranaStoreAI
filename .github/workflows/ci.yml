@@ -26,6 +26,9 @@ jobs:
 
     - name: Install Backend Dependencies
       run: cd backend && npm install
+
+    - name: Install Mobile Dependencies
+      run: cd mobile && npm install
       
     - name: Make test script executable
       run: chmod +x run-tests.sh
