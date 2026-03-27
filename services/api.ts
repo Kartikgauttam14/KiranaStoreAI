@@ -3,6 +3,10 @@ import { useAuthStore } from '@/store/authStore';
 
 const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:3000/api';
 
+if (__DEV__) {
+  console.log('API Base URL:', API_BASE_URL);
+}
+
 const api: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
   timeout: 10000,
@@ -17,6 +21,9 @@ api.interceptors.request.use(
     const { token } = useAuthStore.getState();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+    }
+    if (__DEV__) {
+      console.log(`[API] ${config.method?.toUpperCase()} ${config.baseURL}${config.url}`);
     }
     return config;
   },
