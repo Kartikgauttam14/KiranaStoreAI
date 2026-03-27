@@ -31,14 +31,18 @@ export default function PhoneInputScreen() {
     setLoading(true);
     setError('');
     try {
+      console.log('Sending OTP to:', phone);
       await sendOtp(phone);
+      console.log('OTP sent successfully');
       router.push({
         pathname: '/otp-verify',
         params: { phone },
       });
     } catch (err: any) {
-      setError(err.message || 'Failed to send OTP');
-      Alert.alert('Error', err.message || 'Failed to send OTP');
+      console.error('OTP send error:', err);
+      const errorMsg = err.response?.data?.error || err.message || 'Failed to send OTP';
+      setError(errorMsg);
+      Alert.alert('Error', errorMsg);
     } finally {
       setLoading(false);
     }
